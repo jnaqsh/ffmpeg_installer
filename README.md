@@ -1,7 +1,7 @@
 ffmpeg_installer
 =================
 
-A Linux Shell Script for compiling and installing ffmpeg in CentOS 6.
+A Linux Shell Script for compiling, installing and uninstalling ffmpeg in CentOS (tested on 6.0).
 This script based on ffmpeg guide <http://ffmpeg.org/trac/ffmpeg/wiki/CentosCompilationGuide>
 
 HOW TO USE IT
