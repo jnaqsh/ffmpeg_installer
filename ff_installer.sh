@@ -9,10 +9,10 @@
 sudo yum erase ffmpeg x264 x264-devel
 
 #Get the dependencies
-sudo yum install gcc git make nasm pkgconfig wget
+sudo yum install autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig wget zlib-devel
 
 
-mkdir ~/src/ffmpeg-source
+mkdir -p ~/src/ffmpeg-source
 
 # install Yasm
 cd ~/src/ffmpeg-source
@@ -28,6 +28,15 @@ cd ~/src/ffmpeg-source
 git clone git://git.videolan.org/x264
 cd x264
 ./configure --enable-static
+make
+sudo make install
+
+# install libfdk_aac
+cd ~/src/ffmpeg-source
+git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git
+cd fdk-aac
+autoreconf -fiv
+./configure --disable-shared
 make
 sudo make install
 
@@ -49,6 +58,14 @@ cd libogg-1.3.0
 make
 sudo make install
 
+# install libtheora
+cd ~/src/ffmpeg-source
+wget http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
+tar xzvf libtheora-1.1.1.tar.gz
+cd libtheora-1.1.1
+./configure --disable-shared
+make
+sudo make install
 
 # install libvorbis
 cd ~/src/ffmpeg-source
@@ -67,17 +84,6 @@ cd libvpx
 ./configure
 make
 sudo make install
-
-
-# install zlib
-cd ~/src/ffmpeg-source
-wget http://zlib.net/zlib-1.2.7.tar.gz
-tar xzvf zlib-1.2.7.tar.gz
-cd zlib-1.2.7
-./configure
-make
-sudo make install
-
 
 # install ffmpeg
 cd ~/src/ffmpeg-source

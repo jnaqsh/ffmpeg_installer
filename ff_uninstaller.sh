@@ -23,9 +23,6 @@ cd ~/src/ffmpeg-source/libvorbis-1.3.3 && sudo make uninstall
 # uninstall libvpx
 cd ~/src/ffmpeg-source/libvpx && sudo make uninstall
 
-# uninstall zlib
-cd ~/src/ffmpeg-source/zlib-1.2.7 && sudo make uninstall
-
 # uninstall ffmpeg
 cd ~/src/ffmpeg-source/ffmpeg && sudo make uninstall
 
@@ -33,4 +30,4 @@ cd ~/src/ffmpeg-source/ffmpeg && sudo make uninstall
 rm -rf ~/src/ffmpeg-source
 
 # uninstall dependencies
-sudo yum erase gcc git make nasm pkgconfig wget
+sudo yum erase autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig wget zlib-devel
