@@ -6,10 +6,10 @@
 
 
 #Remove any existing packages:
-sudo yum erase ffmpeg x264 x264-devel
+sudo yum -y erase ffmpeg x264 x264-devel
 
 #Get the dependencies
-sudo yum install autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig wget zlib-devel
+sudo yum -y install autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig wget zlib-devel
 
 
 mkdir -p ~/src/ffmpeg-source
