@@ -11,7 +11,7 @@ HOW TO USE IT
     git clone https://github.com/jnaqsh/ffmpeg_installer/
     cd ffmpeg_installer
     chmod +x ./*.sh
-    ./ffmpeg_installer
+    ./ff_installer.sh
 
 LICENSE
 =======
