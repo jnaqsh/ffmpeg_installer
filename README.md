@@ -6,13 +6,20 @@ A Linux Shell Script for compiling, installing and uninstalling ffmpeg in CentOS
 
 HOW TO USE IT
 =============
+
+---
+#### Install
+
     cd ~
-    mkdir src
     git clone https://github.com/jnaqsh/ffmpeg_installer/
     cd ffmpeg_installer
     chmod +x ./*.sh
     ./ff_installer.sh
-
+---
+#### Remove
+    cd ~/ffmpeg_installer
+    ./ff_uninstaller.sh
+---
 LICENSE
 =======
 Copyright (c) 2013 Naqsh Jahan Toos <http://jnaqsh.com/>

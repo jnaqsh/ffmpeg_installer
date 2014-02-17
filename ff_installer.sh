@@ -9,54 +9,80 @@
 sudo yum -y erase ffmpeg x264 x264-devel
 
 #Get the dependencies
-sudo yum -y install autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig wget zlib-devel
+sudo yum -y install autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig zlib-devel
 
 
-mkdir -p ~/src/ffmpeg-source
+mkdir ~/ffmpeg_sources
 
 # install Yasm
-cd ~/src/ffmpeg-source
-wget http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz
+cd ~/ffmpeg_sources
+curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz
 tar xzvf yasm-1.2.0.tar.gz
 cd yasm-1.2.0
-./configure
+./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin"
 make
-sudo make install
+make install
+make distclean
+. ~/.bash_profile
 
 # install x264
-cd ~/src/ffmpeg-source
-git clone git://git.videolan.org/x264
+cd ~/ffmpeg_sources
+git clone --depth 1 git://git.videolan.org/x264
 cd x264
-./configure --enable-static
+./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static
 make
-sudo make install
+make install
+make distclean
 
 # install libfdk_aac
-cd ~/src/ffmpeg-source
-git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git
+cd ~/ffmpeg_sources
+git clone --depth 1 git://git.code.sf.net/p/opencore-amr/fdk-aac
 cd fdk-aac
 autoreconf -fiv
-./configure --disable-shared
+./configure --prefix="$HOME/ffmpeg_build" --disable-shared
 make
-sudo make install
+make install
+make distclean
 
-# install LAME
-cd ~/src/ffmpeg-source
-wget http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+# install libmp3lame
+cd ~/ffmpeg_sources
+curl -L -O http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
 tar xzvf lame-3.99.5.tar.gz
 cd lame-3.99.5
-./configure --disable-shared --enable-nasm
+./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --disable-shared --enable-nasm
 make
-sudo make install
+make install
+make distclean
+
+# install libopus
+cd ~/ffmpeg_sources
+curl -O http://downloads.xiph.org/releases/opus/opus-1.0.3.tar.gz
+tar xzvf opus-1.0.3.tar.gz
+cd opus-1.0.3
+./configure --prefix="$HOME/ffmpeg_build" --disable-shared
+make
+make install
+make distclean
 
 # install libogg
-cd ~/src/ffmpeg-source
-wget http://downloads.xiph.org/releases/ogg/libogg-1.3.0.tar.gz
-tar xzvf libogg-1.3.0.tar.gz
-cd libogg-1.3.0
-./configure --disable-shared
+cd ~/ffmpeg_sources
+curl -O http://downloads.xiph.org/releases/ogg/libogg-1.3.1.tar.gz
+tar xzvf libogg-1.3.1.tar.gz
+cd libogg-1.3.1
+./configure --prefix="$HOME/ffmpeg_build" --disable-shared
 make
-sudo make install
+make install
+make distclean
+
+# install libvorbis
+cd ~/ffmpeg_sources
+curl -O http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.gz
+tar xzvf libvorbis-1.3.3.tar.gz
+cd libvorbis-1.3.3
+./configure --prefix="$HOME/ffmpeg_build" --with-ogg="$HOME/ffmpeg_build" --disable-shared
+make
+make install
+make distclean
 
 # install libtheora
 cd ~/src/ffmpeg-source
@@ -67,28 +93,25 @@ cd libtheora-1.1.1
 make
 sudo make install
 
-# install libvorbis
-cd ~/src/ffmpeg-source
-wget http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.gz
-tar xzvf libvorbis-1.3.3.tar.gz
-cd libvorbis-1.3.3
-./configure --disable-shared
-make
-sudo make install
-
 
 # install libvpx
-cd ~/src/ffmpeg-source
-git clone http://git.chromium.org/webm/libvpx.git
+cd ~/ffmpeg_sources
+git clone --depth 1 http://git.chromium.org/webm/libvpx.git
 cd libvpx
-./configure
+./configure --prefix="$HOME/ffmpeg_build" --disable-examples
 make
-sudo make install
+make install
+make clean
 
-# install ffmpeg
-cd ~/src/ffmpeg-source
-git clone git://source.ffmpeg.org/ffmpeg
+# install FFmpeg
+cd ~/ffmpeg_sources
+git clone --depth 1 git://source.ffmpeg.org/ffmpeg
 cd ffmpeg
-./configure --enable-gpl --enable-libmp3lame --enable-libvorbis --enable-libvpx --enable-libx264
+PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig"
+export PKG_CONFIG_PATH
+./configure --prefix="$HOME/ffmpeg_build" --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" --extra-libs="-ldl" --enable-gpl --enable-nonfree --enable-libfdk_aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264
 make
-sudo make install
+make install
+make distclean
+hash -r
+. ~/.bash_profile
