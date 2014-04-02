@@ -51,9 +51,9 @@ sudo make install
 
 # install libogg
 cd ~/src/ffmpeg-source
-wget http://downloads.xiph.org/releases/ogg/libogg-1.3.0.tar.gz
-tar xzvf libogg-1.3.0.tar.gz
-cd libogg-1.3.0
+wget http://downloads.xiph.org/releases/ogg/libogg-1.3.1.tar.gz
+tar xzvf libogg-1.3.1.tar.gz
+cd libogg-1.3.1
 ./configure --disable-shared
 make
 sudo make install
@@ -69,9 +69,9 @@ sudo make install
 
 # install libvorbis
 cd ~/src/ffmpeg-source
-wget http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.gz
-tar xzvf libvorbis-1.3.3.tar.gz
-cd libvorbis-1.3.3
+wget http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.gz
+tar xzvf libvorbis-1.3.4.tar.gz
+cd libvorbis-1.3.4
 ./configure --disable-shared
 make
 sudo make install
